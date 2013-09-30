@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.huatek.framework.entity">
+
+	<class name="FwActionLog"
+		table="FW_ACTION_LOG">
+
+		<id name="id" type="java.lang.Long"
+			column="ACT_LOG_ID">
+			<generator class="native">
+	            <param name="sequence">S_FRAMEWORK</param>
+	        </generator>
+		</id>
+		<property name="actionTime" type="java.sql.Timestamp"
+			column="ACTION_TIME" not-null="true" length="7" />
+		<property name="clientIp" type="java.lang.String"
+			column="CLIENT_IP" not-null="false" length="20" />
+		<property name="clientPort" type="java.lang.Long"
+			column="CLIENT_PORT" not-null="false" length="22" />
+
+		<!-- Associations -->
+
+		<!-- bi-directional one-to-many association to FwActionCnt -->
+		<set name="fwActionCnts" lazy="true" inverse="true"
+			cascade="all-delete-orphan">
+			<key>
+				<column name="ACT_LOG_ID" />
+			</key>
+			<one-to-many class="FwActionCnt" />
+		</set>
+		<!-- bi-directional many-to-one association to FwSrcAction -->
+		<many-to-one name="fwSrcAction"
+			class="FwSrcAction" not-null="true">
+			<column name="ACTION_ID" />
+		</many-to-one>
+		<!-- bi-directional many-to-one association to FwAccount -->
+		<many-to-one name="fwAccount"
+			class="FwAccount" not-null="true">
+			<column name="ACCT_ID" />
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

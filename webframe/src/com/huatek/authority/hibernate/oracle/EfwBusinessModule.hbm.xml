@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.huatek.authority.entity">
+	<class name="EfwBusinessModule"
+		table="EFW_BUSINESS_MODULE">
+		<id name="id" type="java.lang.Long" column="MODULE_ID">
+			<generator class="native">
+				<param name="sequence">S_FRAMEWORK</param>
+			</generator>
+		</id>
+		<property name="name" type="java.lang.String" column="NAME" length="128" />
+
+		<property name="title" type="java.lang.String" column="title" length="100" />
+
+		<property name="menuIds" type="java.lang.String" column="MENU_ID" length="500" />
+		<property name="status" type="java.lang.String" column="STATUS" length="2" />
+		<set name="efwBusinessModuleMapSet" lazy="true" inverse="true" cascade="none" order-by="id asc">
+            <key>
+                <column name="module_id" not-null="true">
+                 	<comment>模块ID</comment>
+                </column>
+            </key>
+            <one-to-many class="EfwBusinessModuleMap" />
+        </set>
+	</class>
+</hibernate-mapping>

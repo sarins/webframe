@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.huatek.framework.entity">
+
+	<class name="FwSrcAction" table="FW_SRC_ACTION">
+
+		<id name="id" type="java.lang.Long" column="ACTION_ID">
+			<generator class="native">
+	            <param name="sequence">S_FRAMEWORK</param>
+	        </generator>
+		</id>
+
+		<property name="name" type="java.lang.String" column="ACTION_NAME"
+			not-null="true" length="120" />
+		<property name="actionPath" type="java.lang.String" column="ACTION_PATH"
+			not-null="false" length="200" />
+		<property name="methodName" type="java.lang.String" column="METHOD_NAME"
+			not-null="true" length="30" />
+		<property name="logLevel" type="java.lang.Integer" column="LOG_LEVEL" />
+		<property name="actionMethods" type="java.lang.String" column="ACTION_METHODS"
+			length="100" />
+		<property name="actionOrder" type="java.lang.Double" column="ACTION_ORDER"
+			length="10" />
+		<!-- Associations -->
+
+		<!-- bi-directional one-to-many association to FwDutyAction -->
+		<set name="fwDutyActions" lazy="true" inverse="true" cascade="all-delete-orphan">
+			<key>
+				<column name="ACTION_ID" />
+			</key>
+			<one-to-many class="FwDutyAction" />
+		</set>
+		<!-- bi-directional one-to-many association to FwActionLog -->
+		<set name="fwActionLogs" lazy="true" inverse="true" cascade="all-delete-orphan">
+			<key>
+				<column name="ACTION_ID" />
+			</key>
+			<one-to-many class="FwActionLog" />
+		</set>
+		<!-- bi-directional many-to-one association to FwSource -->
+		<many-to-one name="fwSource" class="FwSource"
+			not-null="true" lazy="false">
+			<column name="SOURCE_ID" />
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

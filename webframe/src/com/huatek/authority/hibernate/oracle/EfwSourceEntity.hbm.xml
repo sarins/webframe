@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.huatek.authority.entity">
+	<class name="EfwSourceEntity" table="efw_sourse_entity">
+		<id name="id" type="java.lang.Long" column="entity_id">
+			<generator class="native">
+				<param name="sequence">S_FRAMEWORK</param>
+			</generator>
+		</id>
+		<property name="entityName" type="java.lang.String" column="entity_name"
+			length="60" />
+		<property name="entityClass" type="java.lang.String" column="entity_class"
+			not-null="true" length="60" />
+		<property name="entityField" type="java.lang.String" column="entity_field" />
+		<property name="queryUrl" type="java.lang.String" column="QUERY_URL" />
+		<property name="queryParam" type="java.lang.String" column="QUERY_PARAM" />
+		<property name="entityAlias" type="java.lang.String" column="ENTITY_ALIAS" />
+		<property name="outputTitle" type="java.lang.String" column="OUTPUT_TITLE" />
+		<property name="outputClass" type="java.lang.String" column="OUTPUT_CLASS" />
+		<property name="outputKey" type="java.lang.String" column="OUTPUT_KEY" />
+		<property name="outputValue" type="java.lang.String" column="OUTPUT_VALUE" />
+		<property name="notNull" type="java.lang.Integer" column="NOT_NULL" />
+	</class>
+</hibernate-mapping>
