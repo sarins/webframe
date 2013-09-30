@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.huatek.fos.orginnermanagement.entity.hibernate.InteriorLoan" table="FOS_INTERIOR_LOAN">
+        <comment>集团内部借款</comment>
+        <id name="id" type="java.lang.Long" column="INTERIOR_LOAN_ID">
+			<generator class="native">
+				<param name="sequence">S_FRAMEWORK</param>
+			</generator>
+		</id>
+     
+        <many-to-one name="group" class="com.huatek.framework.entity.FwGroup" fetch="select">
+            <column name="GROUP_ID">
+                <comment>部门ID</comment>
+            </column>
+        </many-to-one>
+        
+        <property name="loanUser" type="java.lang.String">
+            <column name="LOAN_USER" length="200" not-null="true">
+                <comment>借款人</comment>
+            </column>
+        </property>
+        <property name="loanMoney" type="java.math.BigDecimal">
+            <column name="LOAN_MONEY" precision="22" scale="0" not-null="true">
+                <comment>借款金额</comment>
+            </column>
+        </property>
+        <property name="loanBank" type="java.lang.String">
+            <column name="LOAN_BANK" length="200" not-null="true">
+                <comment>贷款银行</comment>
+            </column>
+        </property>
+        <property name="contractRates" type="java.math.BigDecimal">
+            <column name="CONTRACT_RATES" precision="22" scale="0" not-null="true">
+                <comment>合同利率</comment>
+            </column>
+        </property>
+        <property name="realRates" type="java.lang.String">
+            <column name="REAL_RATES" precision="22" scale="0">
+                <comment>实际利率</comment>
+            </column>
+        </property>
+        <property name="adviserCost" type="java.math.BigDecimal">
+            <column name="ADVISER_COST" precision="22" scale="0">
+                <comment>财务顾问费</comment>
+            </column>
+        </property>
+        <property name="startRateDate" type="java.util.Date">
+            <column name="START_RATE_DATE" length="7" not-null="true">
+                <comment>起息日</comment>
+            </column>
+        </property>
+        <property name="endRateDate" type="java.util.Date">
+            <column name="END_RATE_DATE" length="7" not-null="true">
+                <comment>到期日</comment>
+            </column>
+        </property>
+        <property name="timeLimit" type="java.lang.Long">
+            <column name="TIME_LIMIT" precision="22" scale="0">
+                <comment>期限</comment>
+            </column>
+        </property>
+        <property name="provisionDays" type="java.lang.Long">
+            <column name="PROVISION_DAYS" precision="22" scale="0">
+                <comment>计提天数</comment>
+            </column>
+        </property>
+        <property name="interestIncome" type="java.math.BigDecimal">
+            <column name="INTEREST_INCOME" precision="22" scale="0">
+                <comment>利息收入</comment>
+            </column>
+        </property>
+        <property name="endInterestDate" type="java.lang.Long">
+            <column name="END_INTEREST_DATE" precision="22" scale="0" not-null="true">
+                <comment>结息日</comment>
+            </column>
+        </property>
+        <property name="endInterestMode" type="java.lang.String">
+            <column name="END_INTEREST_MODE" length="2" not-null="true">
+                <comment>付息方式(1表示按月结，2表示季结)</comment>
+            </column>
+        </property>
+        <property name="loanStatus" type="java.lang.String">
+            <column name="LOAN_STATUS" length="2" not-null="true">
+                <comment>借款状态(1表示正常，2表示逾期还款，3表示续贷)</comment>
+            </column>
+        </property>
+        <property name="isDelay" type="java.lang.String">
+            <column name="IS_DELAY" length="2" not-null="true">
+                <comment>是否延期(0表示否,1表示是)</comment>
+            </column>
+        </property>
+        <property name="delayStartDate" type="java.util.Date">
+            <column name="DELAY_START_DATE" length="7">
+                <comment>延期起始日期</comment>
+            </column>
+        </property>
+        <property name="delayEndDate" type="java.util.Date">
+            <column name="DELAY_END_DATE" length="7">
+                <comment>延期截至日期</comment>
+            </column>
+        </property>
+        <property name="transactUser" type="java.lang.String">
+            <column name="TRANSACT_USER" length="200" not-null="true">
+                <comment>经办人</comment>
+            </column>
+        </property>
+        <property name="transactAcctName" type="java.lang.String">
+            <column name="TRANSACT_ACCT_NAME" length="200">
+                <comment>经办人（登录用户名）</comment>
+            </column>
+        </property>
+        <property name="foundDate" type="java.util.Date">
+            <column name="FOUND_DATE" length="7" not-null="true">
+                <comment>创建日期</comment>
+            </column>
+        </property>
+        <property name="remarks" type="java.lang.String">
+            <column name="REMARKS" length="1000" >
+                <comment>备注</comment>
+            </column>
+        </property>
+        <property name="forState" type="java.lang.String">
+            <column name="FOR_STATE" length="2">
+                <comment>编制状态</comment>
+            </column>
+        </property>
+        <property name="resUser" type="java.lang.String">
+            <column name="DEP_RES_USER" length="200">
+                <comment>部门负责人</comment>
+            </column>
+        </property>
+        <property name="auditState" type="java.lang.String">
+            <column name="DEP_AUDITING_STATE" length="2">
+                <comment>部门审核状态</comment>
+            </column>
+        </property>
+        <property name="leaderShip" type="java.lang.String">
+            <column name="MG_LEADERSHIP" length="200">
+                <comment>分管领导</comment>
+            </column>
+        </property>
+        <property name="mgLeaderUserName" type="java.lang.String">
+            <column name="MG_LEADER_USER_NAME" length="200">
+                <comment>分管领导</comment>
+            </column>
+        </property>
+        <property name="leaderAuditState" type="java.lang.String">
+            <column name="MG_LEADER_AUD_STATE" length="2">
+                <comment>分管领导审核状态</comment>
+            </column>
+        </property>
+        <property name="isModify" type="java.lang.String">
+            <column name="IS_MODIFY" length="2">
+                <comment>是否可修改</comment>
+            </column>
+        </property>
+        <property name="repayPeriod" type="java.lang.String">
+            <column name="REPAY_PERIOD" length="10">
+                <comment>还款周期(365)</comment>
+            </column>
+        </property>
+        
+        
+    </class>
+</hibernate-mapping>

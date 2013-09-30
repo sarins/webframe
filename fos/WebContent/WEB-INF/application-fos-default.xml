@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	<!-- 业务数据源代理，可以包含多个 -->
+	<bean id="fundsOriginService" class="com.huatek.fos.fundsmanagement.service.FundsOriginServiceImpl">
+	</bean>
+	<bean id="financingDetailService" class="com.huatek.fos.financingmanagement.service.FinancingDetailServiceImpl">
+	</bean>
+	<bean id="interiorLoanService" class="com.huatek.fos.orginnermanagement.service.InteriorLoanServiceImpl">
+	</bean>
+	<bean id="assetDebtService" class="com.huatek.fos.assetdebtmanagement.service.AssetDebtServiceImpl">
+	</bean>
+	<bean id="projectCategoriesService" class="com.huatek.fos.categorymanagement.service.BaseProjectCategoriesServiceImpl">
+	</bean>
+	<bean id="securityAuthorizationService" class="com.huatek.fos.authorizationmanagement.service.SecurityAuthorizationServiceImpl">
+	</bean>
+	<bean id="initSettlementService" class="com.huatek.fos.basemanagement.service.InitSettlementServiceImpl">
+	</bean>
+	<bean id="iventureCapitalService" class="com.huatek.fos.investmanagement.service.IventureCapitalServiceImpl">
+	</bean>
+	<bean id="entrustLoanService" class="com.huatek.fos.entrustloanmanagement.service.EntrustLoanServiceImpl">
+	</bean>
+	<bean id="fundsApplyService" class="com.huatek.fos.fundsmanagement.service.FundsApplyServiceImpl">
+	</bean>
+	<bean id="fundsGatherService" class="com.huatek.fos.fundsreportgather.service.FundsGatherServiceImpl">
+	</bean>
+	<bean id="assetDebtImportService" class="com.huatek.fos.assetdebtmanagement.service.AssetDebtImportServiceImpl">
+	</bean>
+	
+	<!--
+		- The controllers are autodetected POJOs labeled with the @Controller
+		annotation.
+	-->
+	<context:component-scan base-package="com.huatek.fos.*.action" />
+	<context:component-scan base-package="com.huatek.fos.show" />
+	<aop:config>
+		<aop:aspect id="opsOperationLog" ref="operationLogAspec">
+			<aop:pointcut expression="execution(* com.huatek.fos.*.action.*.*(..))"
+				id="opsLogCut" />
+			<aop:after method="log" pointcut-ref="opsLogCut" />
+		</aop:aspect>
+		<aop:aspect id="opsPermit" ref="permitAspec">
+			<aop:pointcut expression="execution(* com.huatek.fos.*.action.*.*(..))"
+				id="opsPermitCut" />
+			<aop:before method="check" pointcut-ref="opsPermitCut" />
+		</aop:aspect>
+	</aop:config>
+	<bean id="callMethodLog" class="com.huatek.framework.service.LogCallMethodAdvice"/>
+	<aop:config>
+		<aop:aspect id="fosServiceMethodLog" ref="callMethodLog">
+			<aop:pointcut expression="execution(* com.huatek.fos.*.service.*Impl.*(..))"
+				id="serviceLogCut" />
+			<aop:before method="logInfo" pointcut-ref="serviceLogCut" />
+			<aop:after method="logInfoAfter" pointcut-ref="serviceLogCut" />
+		</aop:aspect>
+	</aop:config>
+	<aop:config>
+		<aop:pointcut id="opsMethods"
+			expression="execution(* com.huatek.fos.*.service.*Impl.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="opsMethods" />
+	</aop:config>
+	
+	<!-- upload bean define start -->
+	<bean id="multipartResolver" class="com.huatek.fos.upload.RoutesMultipartResolver">
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+		<property name="maxUploadSize">
+			<value>209715200</value>
+		</property>
+	</bean>
+	<bean name="uploadService" class="com.huatek.fos.upload.service.UploadServiceImpl">
+		<property name="importMap">
+			<map>
+				<entry key="assetDebt" value-ref="assetDebtImportService" /> <!-- 资产负债导入 -->
+			</map>
+		</property>
+	</bean>
+	<!-- upload bean define end -->
+</beans>

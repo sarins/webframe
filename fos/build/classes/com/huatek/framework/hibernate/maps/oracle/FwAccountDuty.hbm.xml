@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.huatek.framework.entity">
+	<class name="FwAccountDuty"
+		table="FW_ACCOUNT_DUTY">
+
+		<id name="id" type="java.lang.Long" column="ACC_DUTY_ID">
+			<generator class="native">
+	            <param name="sequence">S_FRAMEWORK</param>
+	        </generator>
+		</id>
+
+		<!-- bi-directional many-to-one association to FwDuty -->
+		<many-to-one name="fwDuty"
+			class="FwDuty" not-null="true">
+			<column name="DUTY_ID" />
+		</many-to-one>
+		<!-- bi-directional many-to-one association to FwAccount -->
+		<many-to-one name="fwAccount"
+			class="FwAccount" not-null="true">
+			<column name="ACCT_ID" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

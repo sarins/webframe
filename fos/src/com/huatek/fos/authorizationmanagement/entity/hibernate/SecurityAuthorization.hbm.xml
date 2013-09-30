@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.huatek.fos.authorizationmanagement.entity.hibernate.SecurityAuthorization" table="FOS_SECURITY_AUTHORIZATION">
+        <comment>担保授信执行表</comment>
+        <id name="id" type="java.lang.Long" column="SCY_ATZN_DTL_ID">
+			<generator class="native">
+				<param name="sequence">S_FRAMEWORK</param>
+			</generator>
+		</id>
+		<property name="categoryType" type="java.lang.String">
+            <column name="PRO_CATEGORIES_CODE" length="10" not-null="true">
+                <comment>项目类别(1代表参股，2代表其他)</comment>
+            </column>
+        </property>
+		<property name="eventStatus" type="java.lang.String">
+            <column name="EVENT_STATUS" length="10" not-null="true">
+                <comment>事项状态</comment>
+            </column>
+        </property>
+        <property name="eventName" type="java.lang.String">
+            <column name="EVENT_NAME" length="200" not-null="true">
+                <comment>事项名称</comment>
+            </column>
+        </property>
+        <property name="drawType" type="java.lang.String">
+            <column name="DRAW_TYPE" length="10" not-null="true">
+                <comment>提取类别(1代表已提，2代表未提)</comment>
+            </column>
+        </property>
+        <property name="contractMoney" type="java.math.BigDecimal">
+            <column name="CONTRACT_MONEY" not-null="true">
+                <comment>合同金额</comment>
+            </column>
+        </property>
+        <property name="securityMoney" type="java.math.BigDecimal">
+            <column name="SECURITY_MONEY">
+                <comment>担保金额</comment>
+            </column>
+        </property>
+        <property name="eventInitialDate" type="java.util.Date">
+            <column name="EVENT_INITIAL_TIME">
+                <comment>事件发生起始时间</comment>
+            </column>
+        </property>
+        <property name="eventEndDate" type="java.util.Date">
+            <column name="EVENT_END_TIME">
+                <comment>事件发生截至时间</comment>
+            </column>
+        </property>
+        <property name="approveCondition" type="java.lang.String">
+             <column name="APPROVE_CONDITION" length="1000">
+                <comment>审批情况</comment>
+            </column>
+        </property>
+        <property name="eventSummary" type="java.lang.String">
+            <column name="EVENT_SUMMARY" length="1000">
+                <comment>事项基本情况概述</comment>
+            </column>
+        </property>
+        <property name="remarks" type="java.lang.String">
+            <column name="REMARKS" length="1000">
+                <comment>备注</comment>
+            </column>
+        </property>
+        <many-to-one name="group" class="com.huatek.framework.entity.FwGroup" fetch="select">
+            <column name="GROUP_ID">
+                <comment>部门ID</comment>
+            </column>
+        </many-to-one>
+        <property name="transacUser" type="java.lang.String">
+            <column name="TRANSACT_USER" length="200" not-null="true">
+                <comment>经办人</comment>
+            </column>
+        </property>
+        <property name="foundDate" type="java.util.Date">
+            <column name="FOUND_DATE">
+                <comment>创建时间</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
