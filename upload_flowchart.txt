@@ -1,0 +1,26 @@
+client  server
+     -->       query item progress [itemid = hash(filename + size + LMD + type)]
+     <--       return item progress(long length)
+     -->       post item to server by parameter progress
+     <--       save file to repository.
+
+----------------------------------------------------------------------
+File identify in server(FS & DB both):     
+(file.name + file.size + file.lastModifiedDate + file.type).hashcode()
+
+
+----------------------------------------------------------------------
+upload parameters:
+[1]temp file path
+[2]file storage path
+[3]cache size of file upload thread (memory used size ?= cache size * count of thread)
+[4]
+
+----------------------------------------------------------------------
+server function:
+[1]record upload thread byte count.
+[2]flush bytes in memory before close file handle.
+[3]mark file status of transfer completed.
+[4]when complete file transfer must validate file length.
+
+
